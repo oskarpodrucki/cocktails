@@ -6,14 +6,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
 export default function Home() {
-
   const [alcohols, setAlcohols] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,7 +19,7 @@ export default function Home() {
     if (typeof window !== 'undefined') {
       const getAlcohols = async () => {
         let fetchedAlcohols = [];
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 50; i++) {
           try {
             const res = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php");
             const dataJson = await res.json();
@@ -49,25 +47,28 @@ export default function Home() {
             <CardTitle className="text-lg font-bold">{alcohol.strDrink}</CardTitle>
             <CardDescription className="text-sm">{alcohol.strCategory} - {alcohol.strAlcoholic}</CardDescription>
           </CardHeader>
-          <CardContent className="p-4">
-            <p className="mb-2 font-semibold">Instructions:</p>
-            <p>{alcohol.strInstructions}</p>
-            <Image 
-              src={alcohol.strDrinkThumb} 
-              alt={alcohol.strDrink} 
-              width={300}
-              height={300}
-              className="w-full h-auto mt-2 rounded-md"
-            />
-            <p className="mt-4 font-semibold">Ingredients:</p>
-            <ul className="list-disc list-inside">
-              {Object.keys(alcohol).filter(key => key.startsWith('strIngredient') && alcohol[key]).map((ingredient, idx) => (
-                <li key={idx}>
-                  {alcohol[ingredient]} - {alcohol[`strMeasure${idx + 1}`]}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
+          <ScrollArea className="h-[600px]">
+            <CardContent className="p-4 overflow-y-auto h-full">
+              <p className="mb-2 font-semibold">Instructions:</p>
+              <p>{alcohol.strInstructions}</p>
+              <Image 
+                src={alcohol.strDrinkThumb} 
+                alt={alcohol.strDrink} 
+                width={300}
+                height={300}
+                className="w-full h-auto mt-2 rounded-md"
+              />
+              <p className="mt-4 font-semibold">Ingredients:</p>
+              <ul className="list-disc list-inside">
+                {Object.keys(alcohol).filter(key => key.startsWith('strIngredient') && alcohol[key]).map((ingredient, idx) => (
+                  <li key={idx}>
+                    {alcohol[ingredient]} - {alcohol[`strMeasure${idx + 1}`]}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+            <ScrollBar />
+          </ScrollArea>
         </Card>
       ))}
     </div>
