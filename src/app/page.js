@@ -19,7 +19,7 @@ export default function Home() {
     if (typeof window !== 'undefined') {
       const getAlcohols = async () => {
         let fetchedAlcohols = [];
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 15; i++) {
           try {
             const res = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php");
             const dataJson = await res.json();
