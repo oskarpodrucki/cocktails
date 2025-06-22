@@ -1,7 +1,11 @@
-import "@/styles/globals.css"
+import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const metadata = {
+	title: "Cocktails by OP",
+};
 
 export default function RootLayout({ children }) {
 	return (
